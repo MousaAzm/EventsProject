@@ -1,0 +1,41 @@
+﻿@page
+@model EventsProject.Pages.JoinEventModel
+@{
+    ViewData["Title"] = "JoinEvent";
+}
+
+<h3 class="text-light">JoinEvent</h3>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h5>@Html.DisplayFor(model => Model.Event.Title)</h5>
+        </div>
+        <div class="collapse show">
+            <div class="card-body">
+                @Html.DisplayFor(model => Model.Event.Description)
+            </div>
+        </div>
+    </div>
+    @if (Request.Method == "POST")
+    {
+        <div class="text-center ">
+            <h4 class="text-light">Successfully joined ! See you there!</h4>
+            <div>
+                <a asp-page="./Events"><input class="butn" type="button" value="View more events"></a>
+                <a asp-page="./MyEvents"><input class="butn" type="button" value="View your events"></a>
+            </div>
+        </div>
+
+    }
+    else
+    {
+        <div class="text-center">
+            <form method="post">
+                <input type="submit" value="Join This Event" class="butn" />
+                <a asp-page="./Events"><input class="butn" type="button" value="Back To List"></a>
+            </form>
+        </div>
+    }
+
+</div>
