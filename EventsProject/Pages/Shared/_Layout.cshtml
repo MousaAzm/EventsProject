@@ -13,7 +13,6 @@
 </head>
 <body>
     <div class="root">
-        
         <header>
             <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-shrink" id="mainNav">
                 <div class="container">
@@ -31,15 +30,35 @@
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-page="./Events">Events</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-page="./MyEvents">My Event</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-page="./Events">Log In</a>
-                            </li>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-page="./MyEvents">My Event</a>
+                                </li>
+                                <li class="nav-item">
+                                    <form id="logoutForm" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+                                        <button id="logout" type="submit" class="nav-link btn btn-link ">LOG OUT</button>
+                                    </form>
+                                </li>
+
+                                <li>
+                                    <div class="nav-item">
+                                        <a id="manage" class="nav-link " asp-area="" asp-page="">Hello @User.Identity.Name</a>
+                                    </div>
+                                </li>
+
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-page="./Account/Login">Log In</a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 </div>
+
+
             </nav>
         </header>
         <div class="container">
@@ -59,5 +78,6 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>

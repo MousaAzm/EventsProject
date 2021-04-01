@@ -12,6 +12,6 @@ namespace EventsProject.Models
         public string Email { get; set; }
         public string Phone_Number { get; set; }
 
-        public List<Event> Events { get; set; }
+        public List<EventsUser> EventsUsers { get; set; }
     }
 }

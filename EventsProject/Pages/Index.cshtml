@@ -3,6 +3,10 @@
 @{
     ViewData["Title"] = "Home page";
 }
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
 
 <div class="text-center">
     <h1 class="display-4 text-light">Welcome</h1>
@@ -14,9 +18,23 @@
         free for everyone. So, no get late, Hurry up and <br />
         join to our Events.
     </p>
-    <div>
-        <a asp-page="./Events"><input class="butn" type="button" value="Register"></a>
-        <a asp-page="./Events"><input class="butn" type="button" value="Log In"></a>
-    </div>
+    @if (SignInManager.IsSignedIn(User))
+    {
+
+        <div>
+            <form id="logoutForm" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+                <button id="logout" type="submit" class="butn">Logout</button>
+            </form>
+        </div>
+    }
+    else
+    {
+        <div>
+            <a id="register" asp-page="./Account/Register"><input class="butn" type="button" value="Register"></a>
+            <a id="login" asp-page="./Account/Login"><input class="butn" type="button" value="Log In"></a>
+        </div>
+    }
+
+
 </div>
 

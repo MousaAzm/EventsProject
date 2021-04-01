@@ -2,6 +2,7 @@ using EventsProject.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,13 +30,17 @@ namespace EventsProject
             services.AddDbContext<EventContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("EventsDBConnection")));
 
+            services.AddDefaultIdentity<IdentityUser>()
+                .AddEntityFrameworkStores<EventContext>();
+                
 
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, EventContext context)
         {
             if (env.IsDevelopment())
             {
+                //context.Seeding();
                 app.UseDeveloperExceptionPage();
             }
             else
@@ -50,6 +55,7 @@ namespace EventsProject
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

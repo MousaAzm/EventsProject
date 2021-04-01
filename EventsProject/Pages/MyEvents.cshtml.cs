@@ -23,10 +23,10 @@ namespace EventsProject.Pages
 
         public async Task OnGetAsync()
         {
-            var attendee = await _context.Attendees.Include(a => a.Events)
-                .ThenInclude(o => o.Organizer)
-                .FirstOrDefaultAsync();
-            Event = attendee.Events;
+            //var attendee = await _context.Attendees.Include(a => a.Events)
+              //  .ThenInclude(o => o.Organizer)
+              //  .FirstOrDefaultAsync();
+          //  Event = attendee.Events;
         }
 
     }
