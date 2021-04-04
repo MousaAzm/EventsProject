@@ -3,9 +3,10 @@
 @{
     ViewData["Title"] = "Home page";
 }
+@using EventsProject.Models
 @using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<EventsUser> SignInManager
+@inject UserManager<EventsUser> UserManager
 
 
 <div class="text-center">
@@ -30,8 +31,8 @@
     else
     {
         <div>
-            <a id="register" asp-page="./Account/Register"><input class="butn" type="button" value="Register"></a>
-            <a id="login" asp-page="./Account/Login"><input class="butn" type="button" value="Log In"></a>
+            <a id="register" asp-page="/Account/Register"><input class="butn" type="button" value="Register"></a>
+            <a id="login" asp-page="/Account/Login"><input class="butn" type="button" value="Log In"></a>
         </div>
     }
 

@@ -26,16 +26,24 @@
                 <a asp-page="./MyEvents"><input class="butn" type="button" value="View your events"></a>
             </div>
         </div>
-
     }
     else
     {
-        <div class="text-center">
-            <form method="post">
-                <input type="submit" value="Join This Event" class="butn" />
-                <a asp-page="./Events"><input class="butn" type="button" value="Back To List"></a>
-            </form>
-        </div>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div class="text-center">
+                <form method="post">
+                    <input type="submit" value="Join This Event" class="butn" />
+                    <a asp-page="./Events"><input class="butn" type="button" value="Back To List"></a>
+                </form>
+            </div>
+        }
+        else
+        {
+            <div class="text-center">
+                <a id="register" asp-page="/Account/Register"><input class="butn" type="button" value="Register"></a>
+                <a id="login" asp-page="/Account/Login"><input class="butn" type="button" value="Log In"></a>
+            </div>
+        }
     }
-
 </div>

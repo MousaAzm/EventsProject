@@ -7,22 +7,24 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using EventsProject.Models;
 using EventsProject.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace EventsProject.Pages
 {
     public class JoinEventModel : PageModel
     {
         private readonly EventContext _context;
-        
-        public JoinEventModel(EventContext context)
+        private readonly UserManager<EventsUser> _userManager;
+
+        public JoinEventModel(EventContext context, UserManager<EventsUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
 
 
         [BindProperty]
-        //public Attendee Attendee { get; set; }
         public Event Event { get; set; }
 
 
@@ -47,26 +49,31 @@ namespace EventsProject.Pages
         public async Task<IActionResult> OnPostAsync(int? id)
         {
 
-            //if (id == null)
-            //{
-            //    return NotFound();
-            //}
 
-            //Attendee = await _context.EventsUsers.FirstOrDefaultAsync(a => a.Id == id);
-            //Event = await _context.Events.Include(a => a.Attendees).FirstOrDefaultAsync(e => e.Id == id);
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-            //if (Event == null)
-            //{
-            //    return NotFound();
-            //}
+            
+            Event = await _context.Events.FirstOrDefaultAsync(e => e.Id == id);
 
-            //var attendee = await _context.Attendees.FirstOrDefaultAsync();
+            if (Event == null)
+            {
+                return NotFound();
+            }
 
-            //if (!Event.Attendees.Contains(attendee))
-            //{
-            //    Event.Attendees.Add(attendee);
-            //    await _context.SaveChangesAsync();
-            //}
+            var userId = _userManager.GetUserId(User);
+            var user = await _context.Users
+                .Where(u => u.Id == userId)
+                .Include(e => e.Events)
+                .FirstOrDefaultAsync();
+
+            if (!user.Events.Contains(Event))
+            {
+                user.Events.Add(Event);
+                await _context.SaveChangesAsync();
+            }
 
 
             return Page();

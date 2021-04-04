@@ -8,10 +8,8 @@ namespace EventsProject.Models
 {
     public class EventsUser : IdentityUser
     {
-        
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-
+     
+        public List<Event> Events { get; set; }
         public Event Organizer { get; set; }
         public Event Attendee { get; set; }
     }

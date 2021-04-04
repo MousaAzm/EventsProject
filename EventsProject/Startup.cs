@@ -1,4 +1,7 @@
+using Castle.Core.Logging;
 using EventsProject.Data;
+using EventsProject.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -25,22 +28,25 @@ namespace EventsProject
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();
-
+           
             services.AddDbContext<EventContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("EventsDBConnection")));
 
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<EventContext>();
-                
+            services.AddDefaultIdentity<EventsUser>()
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<EventContext>()
+                .AddDefaultTokenProviders();
+
+            
+            services.AddControllersWithViews();
+            services.AddRazorPages();
 
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, EventContext context)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
-                //context.Seeding();
                 app.UseDeveloperExceptionPage();
             }
             else

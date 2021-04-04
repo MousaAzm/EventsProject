@@ -1,0 +1,39 @@
+﻿@page
+@model EventsProject.Pages.Administrators.ManageusersModel
+@{
+    ViewData["Title"] = "ManageUsers";
+}
+
+<h3 class="text-light">Manage Users</h3>
+
+<table class="table text-light">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EventsUser[0].UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EventsUser[0].Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EventsUser[0].Organizer)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.EventsUser)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    <a asp-page="./Delete" asp-route-id=""><input type="checkbox" /></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

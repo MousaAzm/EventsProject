@@ -10,31 +10,51 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace EventsProject.Pages
+namespace EventsProject.Pages.Administrators
 {
     [Authorize]
-    public class MyEventsModel : PageModel
+    public class ManageusersModel : PageModel
     {
         private readonly EventContext _context;
         private readonly UserManager<EventsUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public MyEventsModel(EventContext context, UserManager<EventsUser> userManager)
+        public ManageusersModel(EventContext context, UserManager<EventsUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _context = context;
             _userManager = userManager;
+            _roleManager = roleManager;
         }
 
-        public IList<Event> Event { get; set; }
+
+        
+
+        public IList<EventsUser> EventsUser { get; set; }
 
         public async Task OnGetAsync()
         {
+            EventsUser = await _context.Users.ToListAsync();
+        }
+
+        public async Task<IActionResult> OnPostAsync(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
 
             var userId = _userManager.GetUserId(User);
-            var user = await _context.Users
+
+            var user = await _userManager.Users
                 .Where(u => u.Id == userId)
-                .Include(e => e.Events)
                 .FirstOrDefaultAsync();
-            Event = user.Events;
+
+            
+               
+
+
+            return Page();
         }
 
     }

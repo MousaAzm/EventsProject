@@ -15,7 +15,7 @@
     <div class="root">
         <header>
             <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-shrink" id="mainNav">
-                <div class="container">
+                <div class="container-fluid">
                     <a class="navbar-brand">Events Star</a>
                     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarResponsive"
                             aria-expanded="false" aria-label="Toggle navigation">
@@ -23,35 +23,54 @@
                         <i class="fas fa-bars"></i>
                     </button>
                     <div class="navbar-collapse collapse" id="navbarResponsive">
-                        <ul class="navbar-nav text-uppercase ml-auto">
+                        <ul class="navbar-nav text-uppercase ml-auto float-left">
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-page="./Index">Home</a>
+                                <a class="nav-link" asp-area="" asp-page="/Index">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-page="./Events">Events</a>
+                                <a class="nav-link" asp-area="" asp-page="/Events">Events</a>
                             </li>
                             @if (User.Identity.IsAuthenticated)
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-page="./MyEvents">My Event</a>
+                                    <a class="nav-link" asp-area="" asp-page="/MyEvents">My Event</a>
                                 </li>
+                            }
+                        </ul>
+                        <ul class="navbar-nav text-uppercase ml-auto">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li>
+                                    <div class="nav-item">
+                                        <a class="nav-link text-danger font-weight-bold" asp-area="" asp-page="">@User.Identity.Name</a>
+                                    </div>
+                                </li>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-page="/Administrators/Manageusers">MANAGE USERS</a>
+                                    </li>
+                                }
+                                @if (User.IsInRole("Organizer"))
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-page="/Organizers/OrganizeEvents">ORGANIZE EVENTS</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-page="/Organizers/Create">Add EVENT</a>
+                                    </li>
+                                }
                                 <li class="nav-item">
                                     <form id="logoutForm" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
                                         <button id="logout" type="submit" class="nav-link btn btn-link ">LOG OUT</button>
                                     </form>
                                 </li>
 
-                                <li>
-                                    <div class="nav-item">
-                                        <a id="manage" class="nav-link " asp-area="" asp-page="">Hello @User.Identity.Name</a>
-                                    </div>
-                                </li>
-
                             }
                             else
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-page="./Account/Login">Log In</a>
+                                    <a class="nav-link" asp-area="" asp-page="/Account/Login">Log In</a>
                                 </li>
                             }
                         </ul>
