@@ -24,7 +24,7 @@ namespace EventsProject.Pages
             _userManager = userManager;
         }
 
-        public IList<Event> Event { get; set; }
+        public ICollection<Event> Event { get; set; }
 
         public async Task OnGetAsync()
         {
@@ -32,9 +32,9 @@ namespace EventsProject.Pages
             var userId = _userManager.GetUserId(User);
             var user = await _context.Users
                 .Where(u => u.Id == userId)
-                .Include(e => e.Events)
+                .Include(e => e.JoinedEvents)
                 .FirstOrDefaultAsync();
-            Event = user.Events;
+            Event = user.JoinedEvents;
         }
 
     }

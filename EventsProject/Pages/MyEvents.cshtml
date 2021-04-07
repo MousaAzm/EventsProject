@@ -10,19 +10,19 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Event[0].Title)
+                Title
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Event[0].Date)
+               Date
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Event[0].Address)
+                Address
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Event[0].Place)
+                Place
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Event[0].Description)
+                Description
             </th>
             <th></th>
         </tr>
@@ -47,7 +47,7 @@
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
-                    <a asp-page="./Delete" asp-route-id="" type="button" class="btn btn-primary">Delete</a>
+                    <a asp-page="/Avboka" asp-route-id="" type="button" class="btn btn-primary">Delete</a>
                 </td>
             </tr>
         }

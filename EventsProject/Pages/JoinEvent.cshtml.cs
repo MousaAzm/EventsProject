@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using EventsProject.Models;
 using EventsProject.Data;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EventsProject.Pages
 {
+    [Authorize]
     public class JoinEventModel : PageModel
     {
         private readonly EventContext _context;
@@ -66,12 +68,12 @@ namespace EventsProject.Pages
             var userId = _userManager.GetUserId(User);
             var user = await _context.Users
                 .Where(u => u.Id == userId)
-                .Include(e => e.Events)
+                .Include(e => e.JoinedEvents)
                 .FirstOrDefaultAsync();
 
-            if (!user.Events.Contains(Event))
+            if (!user.JoinedEvents.Contains(Event))
             {
-                user.Events.Add(Event);
+                user.JoinedEvents.Add(Event);
                 await _context.SaveChangesAsync();
             }
 

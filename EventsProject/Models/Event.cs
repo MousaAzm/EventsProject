@@ -15,11 +15,12 @@ namespace EventsProject.Models
         public string Address { get; set; }
         public DateTime Date { get; set; }
         public int SpotsAvailable { get; set; }
+        
 
-        [InverseProperty("Organizer")]
-        public virtual List<EventsUser> Organizers { get; set; }
+        [InverseProperty("HostedEvents")]
+        public EventsUser Organizer { get; set; }
 
-        [InverseProperty("Attendee")]
-        public virtual List<EventsUser> Attendees { get; set; }
+        [InverseProperty("JoinedEvents")]
+        public ICollection<EventsUser> Attendees { get; set; }
     }
 }

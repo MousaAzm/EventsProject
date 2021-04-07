@@ -26,6 +26,7 @@ namespace EventsProject.Data
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
+
             var events = new Event[]
             {
                 new Event{Title="Hapyy Night", Address="Västra Hamngatan 5",Date=DateTime.Now.AddDays(34), Place="Sweden",  Description= "Two night live Concert with best music groups"},
@@ -57,6 +58,13 @@ namespace EventsProject.Data
                     userManager.AddToRoleAsync(user, "Admin").Wait();
                 }
             }
+
+            EventsUser user2 = new EventsUser();
+            user2.UserName = "hej@gmail.com";
+            user2.Email = "hej@gmail.com";
+
+
+            IdentityResult result2 = userManager.CreateAsync(user2, "/6vQd6USL,i_wB&").Result;
         }
 
         private static void SeedRoles(RoleManager<IdentityRole> roleManager)

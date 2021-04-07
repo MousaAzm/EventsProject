@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace EventsProject.Pages.Organizers
 {
-    [Authorize]
+    [Authorize(Roles ="Organizer")]
     public class CreateModel : PageModel
     {
         private readonly EventContext _context;

@@ -6,35 +6,37 @@ using EventsProject.Data;
 using EventsProject.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace EventsProject.Pages.Administrators
 {
-    [Authorize]
+    [Authorize (Roles ="Admin")]
     public class ManageusersModel : PageModel
     {
         private readonly EventContext _context;
         private readonly UserManager<EventsUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public ManageusersModel(EventContext context, UserManager<EventsUser> userManager, RoleManager<IdentityRole> roleManager)
+        public ManageusersModel(EventContext context, UserManager<EventsUser> userManager)
         {
             _context = context;
             _userManager = userManager;
-            _roleManager = roleManager;
         }
 
 
+
+        public ICollection<EventsUser> UsersList { get; set; }
+        public EventsUser UserRole { get; set; }
         
 
-        public IList<EventsUser> EventsUser { get; set; }
-
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
-            EventsUser = await _context.Users.ToListAsync();
+            UsersList = await _context.Users.ToListAsync();
+            return Page();
         }
+
 
         public async Task<IActionResult> OnPostAsync(string id)
         {
@@ -43,19 +45,28 @@ namespace EventsProject.Pages.Administrators
                 return NotFound();
             }
 
+            UsersList = await _context.Users.ToListAsync();
+            UserRole = await _context.Users
+               .Where(u => u.Id == id)
+               .FirstOrDefaultAsync();
 
-            var userId = _userManager.GetUserId(User);
 
-            var user = await _userManager.Users
-                .Where(u => u.Id == userId)
-                .FirstOrDefaultAsync();
-
-            
-               
+            if (!_userManager.IsInRoleAsync(UserRole, "Organizer").Result)
+            {
+                await _userManager.AddToRoleAsync(UserRole, "Organizer");
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                await _userManager.RemoveFromRoleAsync(UserRole, "Organizer");
+                await _context.SaveChangesAsync();
+            }
 
 
             return Page();
+
         }
+
 
     }
 }

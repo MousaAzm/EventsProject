@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace EventsProject.Pages.Organizers
 {
-    [Authorize]
+    [Authorize(Roles = "Organizer")]
     public class OrganizeEventsModel : PageModel
     {
         private readonly EventContext _context;

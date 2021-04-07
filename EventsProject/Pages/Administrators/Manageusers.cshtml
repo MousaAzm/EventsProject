@@ -3,25 +3,29 @@
 @{
     ViewData["Title"] = "ManageUsers";
 }
+@using EventsProject.Models
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<EventsUser> UserManager
 
 <h3 class="text-light">Manage Users</h3>
+
 
 <table class="table text-light">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.EventsUser[0].UserName)
+                UserName
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EventsUser[0].Email)
+                Email
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EventsUser[0].Organizer)
+                IsOrganizer
             </th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.EventsUser)
+        @foreach (var item in Model.UsersList)
         {
             <tr>
                 <td>
@@ -31,9 +35,22 @@
                     @Html.DisplayFor(modelItem => item.Email)
                 </td>
                 <td>
-                    <a asp-page="./Delete" asp-route-id=""><input type="checkbox" /></a>
+                    @if (!UserManager.IsInRoleAsync(item, "Organizer").Result)
+                    {
+                        <form method="post" asp-route-id="@item.Id">
+                            <input type="checkbox" onchange="this.form.submit()" class="form-check-input" />
+                        </form>
+                    }
+                    else
+                    {
+                        <form method="post" asp-route-id="@item.Id">
+                            <input type="checkbox" onchange="this.form.submit()" class="form-check-input" checked />
+                        </form>
+                    }
                 </td>
             </tr>
         }
     </tbody>
+
 </table>
+

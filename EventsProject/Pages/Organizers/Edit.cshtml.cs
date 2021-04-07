@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EventsProject.Pages.Organizers
 {
-    [Authorize]
+    [Authorize(Roles = "Organizer")]
     public class EditModel : PageModel
     {
         private readonly EventContext _context;
