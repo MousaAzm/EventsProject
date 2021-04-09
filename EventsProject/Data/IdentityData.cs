@@ -47,7 +47,7 @@ namespace EventsProject.Data
             if (userManager.FindByEmailAsync("admin@gmail.com").Result == null)
             {
                 EventsUser admin = new EventsUser();
-                admin.UserName = "admin@gmail.com";
+                admin.UserName = "Admin";
                 admin.Email = "admin@gmail.com";
                
 
@@ -60,7 +60,7 @@ namespace EventsProject.Data
             }
 
             EventsUser user = new EventsUser();
-            user.UserName = "hej@gmail.com";
+            user.UserName = "User";
             user.Email = "hej@gmail.com";
 
 

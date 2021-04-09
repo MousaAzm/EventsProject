@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EventsProject.Pages.Administrators
 {
-    [Authorize (Roles ="Admin")]
+    [Authorize(Roles = "Admin")]
     public class ManageusersModel : PageModel
     {
         private readonly EventContext _context;
@@ -31,9 +31,17 @@ namespace EventsProject.Pages.Administrators
         public EventsUser UserRole { get; set; }
         
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(string searchString)
         {
-            UsersList = await _context.Users.ToListAsync();
+            var users = from m in _context.Users
+                       select m;
+            
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                users = users.Where(s => s.UserName.Contains(searchString));
+            }
+
+            UsersList = await users.ToListAsync();
             return Page();
         }
 
@@ -66,7 +74,6 @@ namespace EventsProject.Pages.Administrators
             return Page();
 
         }
-
 
     }
 }
