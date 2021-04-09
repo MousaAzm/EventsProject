@@ -47,7 +47,7 @@
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
-                    <a asp-page="/Avboka" asp-route-id="" type="button" class="btn btn-primary">Delete</a>
+                    <a asp-page="./CancelEvent" asp-route-id="@item.Id" type="button" class="btn btn-primary">Cancel</a>
                 </td>
             </tr>
         }

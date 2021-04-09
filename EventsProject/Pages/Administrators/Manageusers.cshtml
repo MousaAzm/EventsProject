@@ -19,8 +19,8 @@
             <th>
                 Email
             </th>
-            <th>
-                IsOrganizer
+            <th class="text-center">
+                Is Organizer
             </th>
         </tr>
     </thead>
@@ -37,15 +37,18 @@
                 <td>
                     @if (!UserManager.IsInRoleAsync(item, "Organizer").Result)
                     {
-                        <form method="post" asp-route-id="@item.Id">
-                            <input type="checkbox" onchange="this.form.submit()" class="form-check-input" />
-                        </form>
+                        <div class="text-center">
+                            <form method="post" asp-route-id="@item.Id">
+                                <input type="checkbox" onchange="this.form.submit()" class="form-check-input" />
+                            </form>
+                        </div>
                     }
                     else
-                    {
-                        <form method="post" asp-route-id="@item.Id">
-                            <input type="checkbox" onchange="this.form.submit()" class="form-check-input" checked />
-                        </form>
+                    {   <div class="text-center">
+                            <form method="post" asp-route-id="@item.Id">
+                                <input type="checkbox" onchange="this.form.submit()" class="form-check-input" checked />
+                            </form>
+                        </div>
                     }
                 </td>
             </tr>

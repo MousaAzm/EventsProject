@@ -65,7 +65,7 @@ namespace EventsProject.Pages.Organizers
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./OrganizeEvents");
         }
 
         private bool EventExists(int id)

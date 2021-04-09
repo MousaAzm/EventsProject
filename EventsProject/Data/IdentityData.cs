@@ -78,10 +78,13 @@ namespace EventsProject.Data
                 CreateAsync(adminRole).Result;
             }
 
-            IdentityRole organizerRole = new IdentityRole();
-            organizerRole.Name = "Organizer";
-            IdentityResult roleResult2 = roleManager.
-            CreateAsync(organizerRole).Result;
+            if (!roleManager.RoleExistsAsync("Organizer").Result)
+            {
+                IdentityRole organizerRole = new IdentityRole();
+                organizerRole.Name = "Organizer";
+                IdentityResult roleResult2 = roleManager.
+                CreateAsync(organizerRole).Result;
+            }
 
         }
 

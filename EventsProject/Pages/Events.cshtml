@@ -11,10 +11,12 @@
 
     @foreach (var item in Model.Event)
     {
-        <div class="card">
+
+
+<div class="card">
             <div class="card-header">
-                <div class="accordion-container">
-                    <a asp-page="./JoinEvent" asp-route-id="@item.Id"><input class="btn btn-outline-primary btn-sm join-btn" type="button" value="Join"></a>
+                <div class="accordion-container">                   
+                       <a asp-page="./JoinEvent" asp-route-id="@item.Id"><input class="btn btn-outline-primary btn-sm join-btn" type="button" value="Join"></a>
                     <h5 class="accordion-toggle">
                         <button class="btn btn-link ">
                             @Html.DisplayFor(modelItem => item.Title)

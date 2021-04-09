@@ -25,16 +25,32 @@ namespace EventsProject.Pages
         }
 
         public ICollection<Event> Event { get; set; }
+        public EventsUser JoinedUser { get; set; }
 
         public async Task OnGetAsync()
         {
-
             var userId = _userManager.GetUserId(User);
             var user = await _context.Users
                 .Where(u => u.Id == userId)
-                .Include(e => e.JoinedEvents)
                 .FirstOrDefaultAsync();
-            Event = user.JoinedEvents;
+
+            if (_userManager.IsInRoleAsync(user, "Organizer").Result)
+            {
+
+                var JoinedUser = await _context.Users
+                    .Where(u => u.Id == userId)
+                    .Include(e => e.HostedEvents)
+                    .FirstOrDefaultAsync();
+                Event = user.HostedEvents;
+            }
+            else
+            {
+                var JoinedUser = await _context.Users
+                   .Where(u => u.Id == userId)
+                   .Include(e => e.JoinedEvents)
+                   .FirstOrDefaultAsync();
+                Event = user.JoinedEvents;
+            }
         }
 
     }

@@ -55,7 +55,7 @@ namespace EventsProject.Pages.Organizers
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./OrganizeEvents");
         }
     }
 }

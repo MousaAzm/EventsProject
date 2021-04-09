@@ -28,6 +28,7 @@ namespace EventsProject.Pages
 
         [BindProperty]
         public Event Event { get; set; }
+        public EventsUser JoinUser { get; set; }
 
 
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -67,16 +68,35 @@ namespace EventsProject.Pages
 
             var userId = _userManager.GetUserId(User);
             var user = await _context.Users
-                .Where(u => u.Id == userId)
-                .Include(e => e.JoinedEvents)
-                .FirstOrDefaultAsync();
+               .Where(u => u.Id == userId)
+               .FirstOrDefaultAsync();
 
-            if (!user.JoinedEvents.Contains(Event))
+
+            if (_userManager.IsInRoleAsync(user, "Organizer").Result)
             {
-                user.JoinedEvents.Add(Event);
-                await _context.SaveChangesAsync();
+                var JoinUser = await _context.Users
+               .Where(u => u.Id == userId)
+               .Include(e => e.HostedEvents)
+               .FirstOrDefaultAsync();
+                if (!user.HostedEvents.Contains(Event))
+                {
+                    user.HostedEvents.Add(Event);
+                    await _context.SaveChangesAsync();
+                }
             }
-
+            else
+            {
+               var JoinUser = await _context.Users
+              .Where(u => u.Id == userId)
+              .Include(e => e.JoinedEvents)
+              .FirstOrDefaultAsync();
+                if (!user.JoinedEvents.Contains(Event))
+                {
+                    user.JoinedEvents.Add(Event);
+                    await _context.SaveChangesAsync();
+                }
+            }
+           
 
             return Page();
 

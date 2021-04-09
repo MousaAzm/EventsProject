@@ -28,7 +28,8 @@ namespace EventsProject
 
         public void ConfigureServices(IServiceCollection services)
         {
-           
+            services.AddRazorPages();
+
             services.AddDbContext<EventContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("EventsDBConnection")));
 
@@ -37,9 +38,10 @@ namespace EventsProject
                 .AddEntityFrameworkStores<EventContext>()
                 .AddDefaultTokenProviders();
 
-            
-            services.AddControllersWithViews();
-            services.AddRazorPages();
+            services.ConfigureApplicationCookie(options =>
+            options.LoginPath = "/Account/Login"
+
+            ); 
 
         }
 

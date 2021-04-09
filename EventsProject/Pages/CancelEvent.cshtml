@@ -1,0 +1,17 @@
+﻿@page
+@model EventsProject.Pages.CancelEventModel
+@{
+    ViewData["Title"] = "Cancel";
+}
+
+
+<div class="container">
+    <h4 class="text-center text-light">Are you sure you want to Cancel this Event?</h4>
+    <div class="text-center">
+        <form method="post">
+            <input type="hidden" asp-for="Event.Id" />
+            <input type="submit" value="Yes" class="butn" />
+            <a asp-page="./MyEvents"><input value="No" type="button" class="butn" /></a>
+        </form>
+    </div>
+</div>
