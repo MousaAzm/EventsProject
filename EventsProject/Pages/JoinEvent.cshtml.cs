@@ -74,7 +74,7 @@ namespace EventsProject.Pages
 
             if (_userManager.IsInRoleAsync(user, "Organizer").Result)
             {
-                var JoinUser = await _context.Users
+                var hostedJoin = await _context.Users
                .Where(u => u.Id == userId)
                .Include(e => e.HostedEvents)
                .FirstOrDefaultAsync();
@@ -84,9 +84,8 @@ namespace EventsProject.Pages
                     await _context.SaveChangesAsync();
                 }
             }
-            else
-            {
-               var JoinUser = await _context.Users
+           
+               var userJoin = await _context.Users
               .Where(u => u.Id == userId)
               .Include(e => e.JoinedEvents)
               .FirstOrDefaultAsync();
@@ -95,7 +94,7 @@ namespace EventsProject.Pages
                     user.JoinedEvents.Add(Event);
                     await _context.SaveChangesAsync();
                 }
-            }
+            
            
 
             return Page();

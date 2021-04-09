@@ -10,6 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MimeKit;
+using MailKit.Net.Smtp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,8 +32,14 @@ namespace EventsProject
         {
             services.AddRazorPages();
 
+
+
             services.AddDbContext<EventContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("EventsDBConnection")));
+
+            var smtpSettings = Configuration.GetSection("SmtpSettings").Get<SmtpSettings>();
+            services.AddSingleton(smtpSettings);
+
 
             services.AddDefaultIdentity<EventsUser>()
                 .AddRoles<IdentityRole>()
@@ -41,7 +49,8 @@ namespace EventsProject
             services.ConfigureApplicationCookie(options =>
             options.LoginPath = "/Account/Login"
 
-            ); 
+            );
+
 
         }
 

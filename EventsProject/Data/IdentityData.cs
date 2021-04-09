@@ -46,25 +46,25 @@ namespace EventsProject.Data
         {
             if (userManager.FindByEmailAsync("admin@gmail.com").Result == null)
             {
-                EventsUser user = new EventsUser();
-                user.UserName = "admin@gmail.com";
-                user.Email = "admin@gmail.com";
+                EventsUser admin = new EventsUser();
+                admin.UserName = "admin@gmail.com";
+                admin.Email = "admin@gmail.com";
                
 
-                IdentityResult result = userManager.CreateAsync(user, "P@ssw0rd1!").Result;
+                IdentityResult result = userManager.CreateAsync(admin, "P@ssw0rd1!").Result;
 
                 if (result.Succeeded)
                 {
-                    userManager.AddToRoleAsync(user, "Admin").Wait();
+                    userManager.AddToRoleAsync(admin, "Admin").Wait();
                 }
             }
 
-            EventsUser user2 = new EventsUser();
-            user2.UserName = "hej@gmail.com";
-            user2.Email = "hej@gmail.com";
+            EventsUser user = new EventsUser();
+            user.UserName = "hej@gmail.com";
+            user.Email = "hej@gmail.com";
 
 
-            IdentityResult result2 = userManager.CreateAsync(user2, "/6vQd6USL,i_wB&").Result;
+            IdentityResult result2 = userManager.CreateAsync(user, "/6vQd6USL,i_wB&").Result;
         }
 
         private static void SeedRoles(RoleManager<IdentityRole> roleManager)

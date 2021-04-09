@@ -21,9 +21,11 @@ namespace EventsProject.Pages
     {
         private readonly EventContext _context;
         private readonly UserManager<EventsUser> _userManager;
+        private readonly SmtpSettings _smtpS;
 
-        public CancelEventModel(EventContext context, UserManager<EventsUser> userManager)
+        public CancelEventModel(EventContext context, UserManager<EventsUser> userManager, SmtpSettings smtpS)
         {
+            _smtpS = smtpS;
             _context = context;
             _userManager = userManager;
         }
@@ -74,45 +76,28 @@ namespace EventsProject.Pages
                 await _context.Users.Where(u => u.Id == userId).Include(u => u.HostedEvents).FirstOrDefaultAsync();
                 user.HostedEvents.Remove(Event);
                 await _context.SaveChangesAsync();
+
+            }
+           
                 await _context.Users.Where(u => u.Id == userId).Include(u => u.JoinedEvents).FirstOrDefaultAsync();
                 user.JoinedEvents.Remove(Event);
                 await _context.SaveChangesAsync();
 
-                
+
                 var email = new MimeMessage();
-                email.From.Add(MailboxAddress.Parse("your_Emailaddress"));
+                email.From.Add(MailboxAddress.Parse(_smtpS.Sender));
                 email.To.Add(MailboxAddress.Parse(user.Email));
                 email.Subject = "Star Event";
                 email.Body = new TextPart(TextFormat.Plain) { Text = "Your event canceled. We hope you come back soon and join our events. Have a nice day" };
 
-                
+
                 using var smtp = new SmtpClient();
-                await smtp.ConnectAsync("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
-                await smtp.AuthenticateAsync("your_Emailaddress", "your_password");
+                await smtp.ConnectAsync(_smtpS.SmtpServer, _smtpS.Port, SecureSocketOptions.StartTls);
+                await smtp.AuthenticateAsync(_smtpS.UserName, _smtpS.Password);
                 await smtp.SendAsync(email);
                 await smtp.DisconnectAsync(true);
-            }
-            else
-            {
-                await _context.Users.Where(u => u.Id == userId).Include(u => u.JoinedEvents).FirstOrDefaultAsync();
-                user.JoinedEvents.Remove(Event);
-                await _context.SaveChangesAsync();
 
-                
-                var email = new MimeMessage();
-                email.From.Add(MailboxAddress.Parse("your_Emailaddress"));
-                email.To.Add(MailboxAddress.Parse(user.Email));
-                email.Subject = "Star Event";
-                email.Body = new TextPart(TextFormat.Plain) { Text = "Your event canceled. We hope you come back soon and join our events. Have a nice day" };
-
-               
-                using var smtp = new SmtpClient();
-                await smtp.ConnectAsync("smtp.gmail.com", 587, SecureSocketOptions.StartTls);
-                await smtp.AuthenticateAsync("your_Emailaddress", "your_password");
-                await smtp.SendAsync(email);
-                await smtp.DisconnectAsync(true);       
-               
-            }
+            
 
             return RedirectToPage("/MyEvents");
 
