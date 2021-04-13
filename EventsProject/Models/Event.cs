@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace EventsProject.Models
 {
@@ -15,7 +13,7 @@ namespace EventsProject.Models
         public string Address { get; set; }
         public DateTime Date { get; set; }
         public int SpotsAvailable { get; set; }
-        
+
 
         [InverseProperty("HostedEvents")]
         public EventsUser Organizer { get; set; }

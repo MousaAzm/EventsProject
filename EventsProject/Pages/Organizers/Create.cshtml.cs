@@ -1,16 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using EventsProject.Data;
 using EventsProject.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Threading.Tasks;
 
 namespace EventsProject.Pages.Organizers
 {
-    [Authorize(Roles ="Organizer")]
+    [Authorize(Roles = "Organizer")]
     public class CreateModel : PageModel
     {
         private readonly EventContext _context;
@@ -28,7 +25,7 @@ namespace EventsProject.Pages.Organizers
         [BindProperty]
         public Event Event { get; set; }
 
-       
+
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)

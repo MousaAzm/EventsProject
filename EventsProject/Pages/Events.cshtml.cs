@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using EventsProject.Data;
+using EventsProject.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using EventsProject.Data;
-using EventsProject.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace EventsProject.Pages
 {
@@ -19,7 +16,7 @@ namespace EventsProject.Pages
             _context = context;
         }
 
-        public IList<Event> Event { get;set; }
+        public IList<Event> Event { get; set; }
 
         public async Task OnGetAsync()
         {

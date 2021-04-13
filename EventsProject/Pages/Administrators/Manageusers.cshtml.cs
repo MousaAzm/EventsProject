@@ -1,15 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using EventsProject.Data;
 using EventsProject.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace EventsProject.Pages.Administrators
 {
@@ -29,13 +28,13 @@ namespace EventsProject.Pages.Administrators
 
         public ICollection<EventsUser> UsersList { get; set; }
         public EventsUser UserRole { get; set; }
-        
+
 
         public async Task<IActionResult> OnGetAsync(string searchString)
         {
             var users = from m in _context.Users
-                       select m;
-            
+                        select m;
+
             if (!String.IsNullOrEmpty(searchString))
             {
                 users = users.Where(s => s.UserName.Contains(searchString));

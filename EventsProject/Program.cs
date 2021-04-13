@@ -2,15 +2,10 @@ using EventsProject.Data;
 using EventsProject.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 
 namespace EventsProject
@@ -37,7 +32,7 @@ namespace EventsProject
                     var context = services.GetRequiredService<EventContext>();
                     var userManager = services.GetRequiredService<UserManager<EventsUser>>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-                    IdentityData.SeedData(context,userManager, roleManager);
+                    IdentityData.SeedData(context, userManager, roleManager);
                 }
                 catch (Exception ex)
                 {

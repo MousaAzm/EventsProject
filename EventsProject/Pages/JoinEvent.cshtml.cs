@@ -1,14 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using EventsProject.Data;
+using EventsProject.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using EventsProject.Models;
-using EventsProject.Data;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authorization;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace EventsProject.Pages
 {
@@ -58,7 +56,7 @@ namespace EventsProject.Pages
                 return NotFound();
             }
 
-            
+
             Event = await _context.Events.FirstOrDefaultAsync(e => e.Id == id);
 
             if (Event == null)
@@ -84,18 +82,18 @@ namespace EventsProject.Pages
                     await _context.SaveChangesAsync();
                 }
             }
-           
-               var userJoin = await _context.Users
-              .Where(u => u.Id == userId)
-              .Include(e => e.JoinedEvents)
-              .FirstOrDefaultAsync();
-                if (!user.JoinedEvents.Contains(Event))
-                {
-                    user.JoinedEvents.Add(Event);
-                    await _context.SaveChangesAsync();
-                }
-            
-           
+
+            var userJoin = await _context.Users
+           .Where(u => u.Id == userId)
+           .Include(e => e.JoinedEvents)
+           .FirstOrDefaultAsync();
+            if (!user.JoinedEvents.Contains(Event))
+            {
+                user.JoinedEvents.Add(Event);
+                await _context.SaveChangesAsync();
+            }
+
+
 
             return Page();
 

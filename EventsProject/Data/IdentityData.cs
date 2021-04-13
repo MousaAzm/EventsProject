@@ -1,10 +1,6 @@
 ﻿using EventsProject.Models;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace EventsProject.Data
 {
@@ -18,7 +14,7 @@ namespace EventsProject.Data
         {
             SeedEvents(context);
             SeedRoles(roleManager);
-            SeedUsers(userManager);           
+            SeedUsers(userManager);
         }
 
         private static void SeedEvents(EventContext context)
@@ -47,9 +43,9 @@ namespace EventsProject.Data
             if (userManager.FindByEmailAsync("admin@gmail.com").Result == null)
             {
                 EventsUser admin = new EventsUser();
-                admin.UserName = "Admin";
+                admin.UserName = "admin@gmail.com";
                 admin.Email = "admin@gmail.com";
-               
+
 
                 IdentityResult result = userManager.CreateAsync(admin, "P@ssw0rd1!").Result;
 
@@ -60,8 +56,8 @@ namespace EventsProject.Data
             }
 
             EventsUser user = new EventsUser();
-            user.UserName = "User";
-            user.Email = "hej@gmail.com";
+            user.UserName = "naripoy315@yncyjs.com";
+            user.Email = "naripoy315@yncyjs.com";
 
 
             IdentityResult result2 = userManager.CreateAsync(user, "/6vQd6USL,i_wB&").Result;
@@ -88,6 +84,6 @@ namespace EventsProject.Data
 
         }
 
-      
+
     }
 }

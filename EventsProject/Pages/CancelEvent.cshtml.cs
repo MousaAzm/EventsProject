@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using EventsProject.Data;
 using EventsProject.Models;
 using MailKit.Net.Smtp;
@@ -13,6 +9,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using MimeKit;
 using MimeKit.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace EventsProject.Pages
 {
@@ -51,7 +49,7 @@ namespace EventsProject.Pages
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-           
+
 
             if (id == null)
             {
@@ -78,31 +76,30 @@ namespace EventsProject.Pages
                 await _context.SaveChangesAsync();
 
             }
-           
-                await _context.Users.Where(u => u.Id == userId).Include(u => u.JoinedEvents).FirstOrDefaultAsync();
-                user.JoinedEvents.Remove(Event);
-                await _context.SaveChangesAsync();
+
+            await _context.Users.Where(u => u.Id == userId).Include(u => u.JoinedEvents).FirstOrDefaultAsync();
+            user.JoinedEvents.Remove(Event);
+            await _context.SaveChangesAsync();
 
 
-                var email = new MimeMessage();
-                email.From.Add(MailboxAddress.Parse(_smtpS.Sender));
-                email.To.Add(MailboxAddress.Parse(user.Email));
-                email.Subject = "Star Event";
-                email.Body = new TextPart(TextFormat.Plain) { Text = "Your event canceled. We hope you come back soon and join our events. Have a nice day" };
+            var email = new MimeMessage();
+            email.From.Add(MailboxAddress.Parse(_smtpS.Sender));
+            email.To.Add(MailboxAddress.Parse(user.Email));
+            email.Subject = "Star Event";
+            email.Body = new TextPart(TextFormat.Plain) { Text = "Your event canceled. We hope you come back soon and join our events. Have a nice day" };
 
 
-                using var smtp = new SmtpClient();
-                await smtp.ConnectAsync(_smtpS.SmtpServer, _smtpS.Port, SecureSocketOptions.StartTls);
-                await smtp.AuthenticateAsync(_smtpS.UserName, _smtpS.Password);
-                await smtp.SendAsync(email);
-                await smtp.DisconnectAsync(true);
+            using var smtp = new SmtpClient();
+            await smtp.ConnectAsync(_smtpS.SmtpServer, _smtpS.Port, SecureSocketOptions.StartTls);
+            await smtp.AuthenticateAsync(_smtpS.UserName, _smtpS.Password);
+            await smtp.SendAsync(email);
+            await smtp.DisconnectAsync(true);
 
-            
 
             return RedirectToPage("/MyEvents");
 
         }
 
-        
+
     }
 }

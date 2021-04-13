@@ -1,12 +1,6 @@
 ﻿using EventsProject.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace EventsProject.Data
 {
@@ -19,7 +13,7 @@ namespace EventsProject.Data
 
 
         public DbSet<Event> Events { get; set; }
-   
-        
+
+
     }
 }
