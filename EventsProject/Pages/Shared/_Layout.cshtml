@@ -39,7 +39,9 @@
                         </ul>
                         <ul class="navbar-nav text-uppercase ml-auto">
                             @if (User.Identity.IsAuthenticated)
-                            {
+                            {    <li>
+                                    <div class="e-avatar e-avatar-circle image"></div>
+                                 </li>
                                 <li>
                                     <div class="nav-item">
                                         <a class="nav-link text-danger font-weight-bold" asp-area="" asp-page="">@User.Identity.Name</a>

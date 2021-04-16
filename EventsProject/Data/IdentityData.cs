@@ -56,8 +56,8 @@ namespace EventsProject.Data
             }
 
             EventsUser user = new EventsUser();
-            user.UserName = "naripoy315@yncyjs.com";
-            user.Email = "naripoy315@yncyjs.com";
+            user.UserName = "hej@gmail.com";
+            user.Email = "hej@gmail.com";
 
 
             IdentityResult result2 = userManager.CreateAsync(user, "/6vQd6USL,i_wB&").Result;
