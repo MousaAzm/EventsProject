@@ -11,24 +11,20 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Event[0].Title)
+                Title
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Event[0].Description)
+                Description
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Event[0].Place)
+                Place
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Event[0].Address)
+               Address
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Event[0].Date)
+                Date
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Event[0].SpotsAvailable)
-            </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -48,9 +44,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SpotsAvailable)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |

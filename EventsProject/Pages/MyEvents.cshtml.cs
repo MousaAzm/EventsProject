@@ -24,23 +24,12 @@ namespace EventsProject.Pages
 
         public ICollection<Event> Event { get; set; }
 
-
         public async Task OnGetAsync()
         {
             var userId = _userManager.GetUserId(User);
             var user = await _context.Users
                 .Where(u => u.Id == userId)
                 .FirstOrDefaultAsync();
-
-            if (_userManager.IsInRoleAsync(user, "Organizer").Result)
-            {
-
-                var hostedJoined = await _context.Users
-                    .Where(u => u.Id == userId)
-                    .Include(e => e.HostedEvents)
-                    .FirstOrDefaultAsync();
-                Event = user.HostedEvents;
-            }
 
             var userJoined = await _context.Users
                .Where(u => u.Id == userId)

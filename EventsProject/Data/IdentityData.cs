@@ -7,7 +7,6 @@ namespace EventsProject.Data
     public static class IdentityData
     {
 
-
         public static void SeedData(EventContext context,
             UserManager<EventsUser> userManager,
             RoleManager<IdentityRole> roleManager)
@@ -21,7 +20,6 @@ namespace EventsProject.Data
         {
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
-
 
             var events = new Event[]
             {
@@ -46,7 +44,6 @@ namespace EventsProject.Data
                 admin.UserName = "admin@gmail.com";
                 admin.Email = "admin@gmail.com";
 
-
                 IdentityResult result = userManager.CreateAsync(admin, "P@ssw0rd1!").Result;
 
                 if (result.Succeeded)
@@ -56,9 +53,10 @@ namespace EventsProject.Data
             }
 
             EventsUser user = new EventsUser();
+            user.FirstName = "Björn";
+            user.LastName = "Strömberg";
             user.UserName = "hej@gmail.com";
             user.Email = "hej@gmail.com";
-
 
             IdentityResult result2 = userManager.CreateAsync(user, "/6vQd6USL,i_wB&").Result;
         }

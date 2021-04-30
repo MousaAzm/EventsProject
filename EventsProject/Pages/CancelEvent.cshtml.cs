@@ -49,8 +49,6 @@ namespace EventsProject.Pages
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-
-
             if (id == null)
             {
                 return NotFound();
@@ -68,7 +66,6 @@ namespace EventsProject.Pages
                 return NotFound();
             }
 
-
             if (_userManager.IsInRoleAsync(user, "Organizer").Result)
             {
                 await _context.Users.Where(u => u.Id == userId).Include(u => u.HostedEvents).FirstOrDefaultAsync();
@@ -81,20 +78,17 @@ namespace EventsProject.Pages
             user.JoinedEvents.Remove(Event);
             await _context.SaveChangesAsync();
 
-
             var email = new MimeMessage();
             email.From.Add(MailboxAddress.Parse(_smtpS.Sender));
             email.To.Add(MailboxAddress.Parse(user.Email));
             email.Subject = "Star Event";
             email.Body = new TextPart(TextFormat.Plain) { Text = "Your event canceled. We hope you come back soon and join our events. Have a nice day" };
 
-
             using var smtp = new SmtpClient();
             await smtp.ConnectAsync(_smtpS.SmtpServer, _smtpS.Port, SecureSocketOptions.StartTls);
             await smtp.AuthenticateAsync(_smtpS.UserName, _smtpS.Password);
             await smtp.SendAsync(email);
             await smtp.DisconnectAsync(true);
-
 
             return RedirectToPage("/MyEvents");
 

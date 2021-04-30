@@ -24,11 +24,8 @@ namespace EventsProject.Pages.Administrators
             _userManager = userManager;
         }
 
-
-
         public ICollection<EventsUser> UsersList { get; set; }
         public EventsUser UserRole { get; set; }
-
 
         public async Task<IActionResult> OnGetAsync(string searchString)
         {
@@ -44,7 +41,6 @@ namespace EventsProject.Pages.Administrators
             return Page();
         }
 
-
         public async Task<IActionResult> OnPostAsync(string id)
         {
             if (id == null)
@@ -57,7 +53,6 @@ namespace EventsProject.Pages.Administrators
                .Where(u => u.Id == id)
                .FirstOrDefaultAsync();
 
-
             if (!_userManager.IsInRoleAsync(UserRole, "Organizer").Result)
             {
                 await _userManager.AddToRoleAsync(UserRole, "Organizer");
@@ -68,7 +63,6 @@ namespace EventsProject.Pages.Administrators
                 await _userManager.RemoveFromRoleAsync(UserRole, "Organizer");
                 await _context.SaveChangesAsync();
             }
-
 
             return Page();
 

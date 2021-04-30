@@ -12,7 +12,6 @@ namespace EventsProject.Pages
         private readonly EventContext _context;
         private readonly UserManager<EventsUser> _userManager;
 
-
         public IndexModel(ILogger<IndexModel> logger, EventContext context, UserManager<EventsUser> userManager)
         {
             _logger = logger;
